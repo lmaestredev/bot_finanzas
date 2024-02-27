@@ -1,6 +1,5 @@
-package com.lmaestre.bot_finanzas.adapters.inbound;
+package com.lmaestre.bot_finanzas.drivenAdapters.inbound;
 
-import com.lmaestre.bot_finanzas.configs.TelegramConfig;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.TelegramBotsApi;

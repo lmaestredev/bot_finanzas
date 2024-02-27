@@ -1,4 +1,4 @@
-package com.lmaestre.bot_finanzas.configs;
+package com.lmaestre.bot_finanzas.drivenAdapters.inbound;
 
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -9,10 +9,13 @@ public class TelegramConfig extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        System.out.println("Mensaje recibido: " + update.getMessage().getText());
+
         Long chatId = update.getMessage().getChatId();
-        System.out.println("prueba id:" + System.getenv("bot_username_-d"));
-        System.out.println(chatId);
+        System.out.println("Mensaje recibido: " + update.getMessage().getText() + " - from: " + chatId.toString());
+
+        //logica para validar usuario
+
+        // logica para procesar endpoint
         sendMessage(generateSendMessage(chatId));
     }
 
