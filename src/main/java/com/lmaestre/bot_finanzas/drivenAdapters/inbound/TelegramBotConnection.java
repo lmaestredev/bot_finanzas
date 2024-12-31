@@ -15,6 +15,7 @@ public class TelegramBotConnection implements CommandLineRunner {
             TelegramBotsApi botsApi = new TelegramBotsApi(DefaultBotSession.class);
             botsApi.registerBot(new TelegramConfig());
         } catch (TelegramApiException e) {
+            System.out.println(" es aqui........");
             e.printStackTrace();
         }
     }
