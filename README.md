@@ -20,16 +20,11 @@ Este proyecto es una aplicaci√≥n desarrollada con el framework Spring Boot dise√
    ```bash
    gradle build
    ```
-3. **Instalar Nest CLI:**
-   ```bash
-   npm i -g @nestjs/cli
-   ```
-
-4. **Configurar el archivo de entorno:**
+3. **Configurar el archivo de entorno:**
     - Clonar el archivo `.env.template` y renombrarlo a `.env`.
     - Completar las variables necesarias en el archivo `.env`.
 
-5. **Levantar la base de datos:**
+4. **Levantar la base de datos:**
    ```bash
    docker-compose --env-file .env up -d
    ```
