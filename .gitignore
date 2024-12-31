@@ -38,3 +38,6 @@ out/
 
 ### mongo local ###
 mongodb/
+
+# Ignore the .env file
+.env
