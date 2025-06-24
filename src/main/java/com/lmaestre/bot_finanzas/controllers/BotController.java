@@ -21,17 +21,17 @@ public class BotController {
         }
 
         if (message.startsWith("/start")) {
-            return Mono.just("¡Bienvenido al bot de Finanzas Personales! 🎉\n" +
-                    "Estos son algunos comandos que puedes usar:\n" +
-                    "/add_income <monto> <payType> - Agrega un ingreso\n" +
-                    "/add_expense <monto> <payType> - Agrega un gasto\n" +
-                    "/report - Muestra un resumen de tus finanzas");
+            return Mono.just("¡Bienvenido al bot de Finanzas Personales! 🎉\n\n" +
+                    "Estos son algunos comandos que puedes usar:\n\n" +
+                    "1 - /add_income <monto> <payType> -> Agrega un ingreso\n\n" +
+                    "2 - /add_expense <monto> <payType> -> Agrega un gasto\n\n" +
+                    "3 - /report -> Muestra un resumen de tus finanzas");
         } else if (message.startsWith("/add_income")) {
-            return handleAddTransaction(chatId, message, true);
+            return handleAddTransaction(message, true);
         } else if (message.startsWith("/add_expense")) {
-            return handleAddTransaction(chatId, message, false);
+            return handleAddTransaction(message, false);
         } else if (message.equals("/report")) {
-            return handleReport(chatId);
+            return handleReport();
         } else {
             return Mono.just("Comando no reconocido. Usa /start para ver los comandos disponibles.");
         }
@@ -42,8 +42,10 @@ public class BotController {
         return chatId.toString().equals(authorizedUserId);
     }
 
-    private Mono<String> handleAddTransaction(Long chatId, String message, boolean isIncome) {
+    private Mono<String> handleAddTransaction(String message, boolean isIncome) {
+
         String[] parts = message.split(" ");
+
         if (parts.length < 3) {
             return Mono.just("Por favor, proporciona información válida. Ejemplo: " +
                     (isIncome ? "/add_income 500 cash" : "/add_expense 300 credit_card visa"));
@@ -53,6 +55,7 @@ public class BotController {
             double amount = Double.parseDouble(parts[1]);
             String payType = parts[2];
             String cardType = parts.length > 3 ? parts[3] : "N/A";
+
             if (!isIncome) {
                 amount = -amount;
             }
@@ -69,12 +72,13 @@ public class BotController {
                             " de $" + Math.abs(saved.getAmount()) + ", usando " + saved.getPayType() + " - " + saved.getCardType());
 
         } catch (NumberFormatException e) {
+            System.out.println(e.getMessage());
             return Mono.just("El monto proporcionado no es válido. Por favor, usa un número. Ejemplo: /add_income 500 cash");
         }
     }
 
 
-    private Mono<String> handleReport(Long chatId) {
+    private Mono<String> handleReport() {
         return billService.calculateBalance()
                 .map(balance -> "📊 Resumen de tus Finanzas:\n" +
                         "💰 Balance total: $" + balance);
